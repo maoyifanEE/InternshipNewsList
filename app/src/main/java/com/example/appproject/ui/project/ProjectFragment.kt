@@ -1,60 +1,53 @@
 package com.example.appproject.ui.project
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
-import android.content.Intent
-import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.appproject.MyBroadcastReceiver
 import com.example.appproject.R
-import com.example.appproject.ui.home.Test.title
+import com.example.appproject.ui.User
 
 @SuppressLint("NotifyDataSetChanged")
 
-class ProjectFragment(private val categoryId: Int) : Fragment() {
+class ProjectFragment : Fragment() {
     private val projectViewModel = ProjectViewModel()
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var progressbar: View
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val projectBroadcastReceiver = MyBroadcastReceiver()
-        val projectFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
-            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
-        }
-        requireActivity().registerReceiver(projectBroadcastReceiver,projectFilter)
-        requireActivity().title = "Project"
         projectAdapter = ProjectAdapter(requireActivity()) {
             onReplaceFragment(it)
         }
         return inflater.inflate(R.layout.fragment_project, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val projectSwipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.project_refresh)
         val projectRecyclerView = view.findViewById<RecyclerView>(R.id.project_recycler_view)
+//        val projectCategoryTabLayout =
+//            view.findViewById<TabLayout>(R.id.project_category_tab_layout)
         projectRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
-
         progressbar = view.findViewById(R.id.progress)
 
         //添加观察者
-        projectViewModel.projectData.observe(requireActivity()) {
+        projectViewModel.shareProjectData.observe(requireActivity()) {
             progressbar.visibility = View.GONE
-            projectAdapter.refreshData(it.datas)
+            projectAdapter.addData(it.datas)
             projectRecyclerView.adapter?.notifyDataSetChanged()
+        }
+        projectViewModel.shareProjectCategory.observe(requireActivity()) {
+
         }
 
         projectRecyclerView.adapter = projectAdapter
@@ -62,7 +55,7 @@ class ProjectFragment(private val categoryId: Int) : Fragment() {
 
         //下拉刷新
         projectSwipeRefreshLayout.setOnRefreshListener {
-            projectViewModel.getProjectResponse(categoryId)
+            projectViewModel.onRefresh()
             projectSwipeRefreshLayout.isRefreshing = false
             projectRecyclerView.adapter?.notifyDataSetChanged()
         }
@@ -73,16 +66,11 @@ class ProjectFragment(private val categoryId: Int) : Fragment() {
     }
 
     private fun onReplaceFragment(url: String) {
-        requireActivity().supportFragmentManager
+        parentFragmentManager
             .beginTransaction()
-            .replace(R.id.project_fragment_container, ProjectDetailFragment(url))
+            .replace(R.id.main_activity_fragment_container, ProjectDetailFragment(url))
             .addToBackStack(url)
             .commit()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("zyp", "ProjectFragmentDestroyed")
     }
 
 
@@ -90,6 +78,6 @@ class ProjectFragment(private val categoryId: Int) : Fragment() {
         if (projectAdapter.isEmpty()) {
             progressbar.visibility = View.VISIBLE
         }
-        projectViewModel.getProjectResponse(categoryId)
+        projectViewModel.onRefresh()
     }
 }
