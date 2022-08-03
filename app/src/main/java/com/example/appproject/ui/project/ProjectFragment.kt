@@ -43,11 +43,8 @@ class ProjectFragment : Fragment() {
         //添加观察者
         projectViewModel.shareProjectData.observe(requireActivity()) {
             progressbar.visibility = View.GONE
-            projectAdapter.addData(it.datas)
+            projectAdapter.refreshData(it.datas)
             projectRecyclerView.adapter?.notifyDataSetChanged()
-        }
-        projectViewModel.shareProjectCategory.observe(requireActivity()) {
-
         }
 
         projectRecyclerView.adapter = projectAdapter
