@@ -2,20 +2,15 @@ package com.example.appproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import com.example.appproject.ui.home.HomeFragment
 import com.example.appproject.ui.project.ProjectFragment
-import com.example.appproject.ui.square.SquareFragment
+import com.example.appproject.ui.setting.SettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    private val squareFragment = SquareFragment()
+    private val settingFragment = SettingFragment()
     private val homeFragment = HomeFragment()
     private val projectFragment = ProjectFragment()
 
@@ -32,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navi_button_home -> onReplace(homeFragment)
-                R.id.navi_button_square -> onReplace(squareFragment)
+                R.id.navi_button_square -> onReplace(settingFragment)
                 R.id.navi_button_project -> onReplace(projectFragment)
             }
             true
