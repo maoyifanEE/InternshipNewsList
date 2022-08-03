@@ -15,16 +15,21 @@ import com.example.appproject.R
 class ProjectAdapter(
     private val activity: Activity,
     private val projectList: MutableList<ProjectViewModel.Project> = mutableListOf(),
-    private val projectLinkCallback : (String) -> Unit
+    private val projectLinkCallback: (String) -> Unit
 ) : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
 
 
-    fun addData(list : MutableList<ProjectViewModel.Project>) {
+    fun addData(list: MutableList<ProjectViewModel.Project>) {
+        projectList.addAll(list)
+    }
+
+    fun refreshData(list: MutableList<ProjectViewModel.Project>) {
+        projectList.clear()
         projectList.addAll(list)
     }
 
 
-    fun isEmpty() : Boolean = projectList.isEmpty()
+    fun isEmpty(): Boolean = projectList.isEmpty()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectViewHolder {
