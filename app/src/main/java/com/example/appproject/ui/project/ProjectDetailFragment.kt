@@ -17,7 +17,7 @@ class ProjectDetailFragment(private val url: String) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_project_detail, container, false)
-        webView = view.findViewById(R.id.project_web_view)
+        webView = view.findViewById<WebView>(R.id.project_web_view)
         return view
     }
 

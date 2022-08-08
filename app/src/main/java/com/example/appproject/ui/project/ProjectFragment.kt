@@ -1,27 +1,23 @@
 package com.example.appproject.ui.project
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
-import android.content.Intent
-import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.appproject.MyBroadcastReceiver
+import androidx.viewpager2.widget.ViewPager2
 import com.example.appproject.R
-import com.example.appproject.ui.home.Test.title
+import com.example.appproject.ui.User
+import com.google.android.material.tabs.TabLayout
 
 @SuppressLint("NotifyDataSetChanged")
 
-class ProjectFragment(private val categoryId : Int) : Fragment() {
+class ProjectFragment : Fragment() {
     private val projectViewModel = ProjectViewModel()
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var progressbar: View
@@ -32,12 +28,7 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val projectBroadcastReceiver = MyBroadcastReceiver()
-//        val projectFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
-//            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
-//        }
-//        requireActivity().registerReceiver(projectBroadcastReceiver,projectFilter)
-        requireActivity().title = "Project"
+
         projectAdapter = ProjectAdapter(requireActivity()) {
             onReplaceFragment(it)
         }
@@ -48,12 +39,14 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
         val projectSwipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.project_refresh)
         val projectRecyclerView = view.findViewById<RecyclerView>(R.id.project_recycler_view)
 
+//        val projectCategoryTabLayout =
+//            view.findViewById<TabLayout>(R.id.project_category_tab_layout)
         projectRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
         progressbar = view.findViewById(R.id.progress)
 
         //添加观察者
-        projectViewModel.projectData.observe(requireActivity()) {
+        projectViewModel.shareProjectData.observe(requireActivity()) {
             progressbar.visibility = View.GONE
             projectAdapter.refreshData(it.datas)
             projectRecyclerView.adapter?.notifyDataSetChanged()
@@ -64,7 +57,7 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
 
         //下拉刷新
         projectSwipeRefreshLayout.setOnRefreshListener {
-            projectViewModel.getProjectResponse(categoryId)
+            projectViewModel.onRefresh()
             projectSwipeRefreshLayout.isRefreshing = false
             projectRecyclerView.adapter?.notifyDataSetChanged()
         }
@@ -84,7 +77,7 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("zyp", "ProjectFragmentDestroyed")
+        Log.d("zyp","ProjectFragmentDestroyed")
     }
 
 
@@ -92,6 +85,6 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
         if (projectAdapter.isEmpty()) {
             progressbar.visibility = View.VISIBLE
         }
-        projectViewModel.getProjectResponse(categoryId)
+        projectViewModel.onRefresh()
     }
 }
