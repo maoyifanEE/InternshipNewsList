@@ -38,13 +38,15 @@ class SettingFragment:Fragment() {
 
         settingViewModel = ViewModelProvider(requireActivity()).get(SettingViewModel::class.java)
 
-        val settingFragmentEtId : EditText = view.findViewById<EditText>(R.id.settingFragment_et_phonenumber)
+        val settingFragmentEtId : EditText = view.findViewById<EditText>(R.id.settingFragment_et_userName)
         val settingFragmentEtPwd : EditText = view.findViewById<EditText>(R.id.settingFragment_et_password)
         val settingFragmentIvBeforeAgree : ImageView = view.findViewById<ImageView>(R.id.settingFragment_iv_beforeAgree)
         val settingFragmentIvAfterAgree : ImageView = view.findViewById<ImageView>(R.id.settingFragment_iv_afterAgree)
         val settingFragmentTvAgreement : TextView = view.findViewById<TextView>(R.id.settingFragment_tv_agreement2)
         val settingFragmentTvPwdFind : TextView = view.findViewById<TextView>(R.id.settingFragment_tv_pwdFind2)
         val settingFragmentTvRegister : TextView = view.findViewById<TextView>(R.id.settingFragment_tv_register2)
+        val settingFragmentBtLogIn : Button = view.findViewById<Button>(R.id.settingFragment_button_logIn)
+        val settingFragmentFlVerify : FrameLayout = view.findViewById<FrameLayout>(R.id.settingFragment_fl_verify)
 //        val userRecyclerView : RecyclerView = view.findViewById<RecyclerView>(R.id.settingFragment_rv_user)
 //        userRecyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -99,29 +101,34 @@ class SettingFragment:Fragment() {
             settingFragmentIvAfterAgree.visibility = INVISIBLE
             userManager.isAgree = false
         }
-        view.findViewById<Button>(R.id.settingFragment_button_logIn).setOnClickListener{
-            refresh()
-            if(TextUtils.isEmpty(settingFragmentEtId.text)){
-                toast("请输入用户名")
-            }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
-                toast("请输入密码")
-            }else if(!userManager.isAgree){
-                Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
-            }
-            onlineCheck(idText,passwordText)
-            if (!userManager.isCheck){
-                Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
-            }else{
-               Toast.makeText(context,"log in", Toast.LENGTH_SHORT).show()
-                userManager.logIn()
-                goToFragment(LogInFragment())
-           }
+        settingFragmentBtLogIn.setOnClickListener{
+//            if(TextUtils.isEmpty(settingFragmentEtId.text)){
+//                toast("请输入用户名")
+//            }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
+//                toast("请输入密码")
+//            }else if(!userManager.isAgree){
+//                Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
+//            }else{
+//                onlineCheck(idText,passwordText)
+                settingFragmentFlVerify.visibility = VISIBLE
+                settingFragmentBtLogIn.visibility = INVISIBLE
+//                if (!userManager.isCheck){
+//                    Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
+//                }else{
+//                    Toast.makeText(context,"log in", Toast.LENGTH_SHORT).show()
+//                    userManager.logIn()
+//                    goToFragment(LogInFragment())
+//                }
+//            }
+
         }
 
 
 
         return view
     }
+
+
     private fun toast(text:String){
         Toast.makeText(context,text,Toast.LENGTH_SHORT).show()
     }
