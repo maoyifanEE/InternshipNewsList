@@ -14,6 +14,7 @@ class ProjectViewModel : ViewModel() {
     private val projectCategory = MutableLiveData<ProjectCategoryData>()
     var shareProjectData: LiveData<ProjectData> = projectResponse
     var shareProjectCategory: LiveData<ProjectCategoryData> = projectCategory
+    var categoryId = 294
 
 
     private fun getProjectCategory() {
@@ -30,6 +31,7 @@ class ProjectViewModel : ViewModel() {
     }
 
     private fun getProjectResponse() {
+
         ProjectRepository.getProjectList(1, 294, object : NetResult<ProjectData> {
             override fun onResult(netData: NetData<ProjectData>) {
                 if (netData.errorCode == 0) {
@@ -42,33 +44,11 @@ class ProjectViewModel : ViewModel() {
         })
     }
 
-    data class ProjectCategoryData(
-        val data: List<ProjectCategory>
-    )
-
-    data class ProjectCategory(
-        val name: String,
-        val id: Int,
-    )
-
-    data class ProjectData(
-        val curPage: Int,
-        val datas: MutableList<Project>,
-        val pageCount: Int,
-        val size: Int
-    )
-
-    data class Project(
-        val author: String,
-        val chapterId: Int,         //cid
-        val title: String,
-        val desc: String,
-        val envelopePic: String,
-        val link: String,
-        val niceDate: String
-    )
 
     fun onRefresh() {
         getProjectResponse()
+    }
+
+    interface getCategoryId {
     }
 }
