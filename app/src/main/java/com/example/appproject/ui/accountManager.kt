@@ -86,15 +86,13 @@ public class AccountManager {
      * the confirmed password is not the same as password
      * the password is too easy to guess
      */
-    fun register(userName:String, pwd:String, pwdConfirm:String):String{
+    fun registerCheck(userName:String, pwd:String, pwdConfirm:String):String{
         if(userName.isEmpty()){
             return "Please enter the user name"
         }else if(pwd.isEmpty()){
             return "Please enter the password"
         }else if(pwdConfirm.isEmpty()){
             return "Please confirm the password"
-        }else if(!userIsDifferent(userName)){
-            return "The user name is already exist"
         }else if(!userNameIsValid(userName)){
             return "The user name contains sensitive word"
         }else if(userName.length > 25){
@@ -108,7 +106,7 @@ public class AccountManager {
         }else if(pwdIsTooEasy(pwd,userName)){
             return "The password is too easy to guess"
         }else{
-            return "Successfully register"
+            return "Valid username and password"
         }
     }
 

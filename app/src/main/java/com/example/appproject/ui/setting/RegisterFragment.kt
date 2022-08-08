@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,7 @@ class RegisterFragment:Fragment() {
     ): View? {
         val view:View = inflater.inflate(R.layout.register_fragment, container, false)
 
-        var phoneNum : String = ""
+        var userName : String = ""
         var verification : Int
         var pwd : String = ""
         var pwdComfirm : String = ""
@@ -62,7 +63,7 @@ class RegisterFragment:Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                 phoneNum = p0.toString()
+                 userName = p0.toString()
             }
         })
         registerFragmentEtVerify.addTextChangedListener(object : TextWatcher{
@@ -99,20 +100,18 @@ class RegisterFragment:Fragment() {
             }
         })
         registerFragmentTvRegister.setOnClickListener{
-            Toast.makeText(context, userManager.register(phoneNum,pwd,pwdComfirm),Toast.LENGTH_SHORT).show()
-            if(userManager.register(phoneNum,pwd,pwdComfirm) == "Successfully register"){
-                goToFragment(SettingFragment())
-            }
+            onlineRegister(userName,pwd,pwdComfirm)
         }
 
         return view
     }
 
-    private fun onlineRegister(id:String,pwd:String){
-        AccountRepository.register(id, pwd, pwd, object : NetResult<User> {
+    private fun onlineRegister(id:String,pwd:String,pwdConfirm:String){
+        AccountRepository.register(id, pwd, pwdConfirm, object : NetResult<User> {
             override fun onResult(netData: NetData<User>) {
+//                Log.d("liyu", "register json : ${netData.json}")
+                Toast.makeText(context, netData.errorMsg, Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 

@@ -20,7 +20,7 @@ class ProjectViewModel : ViewModel() {
         ProjectRepository.getProjectsCategory(object : NetResult<ProjectCategoryData> {
             override fun onResult(netData: NetData<ProjectCategoryData>) {
                 if (netData.errorCode == 0) {
-                    Log.d("category", netData.data.toString())
+                    //Log.d("category", netData.data.toString())
                     netData.data?.let {
                         projectCategory.postValue(it)
                     }
