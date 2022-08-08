@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.appproject.R
 import com.example.appproject.ui.User
+import com.example.appproject.ui.userManager
 import com.example.wanandroidapi.NetData
 import com.example.wanandroidapi.NetResult
 import com.example.wanandroidapi.repository.AccountRepository
@@ -31,6 +32,7 @@ class RegisterFragment:Fragment() {
         var phoneNum : String = ""
         var verification : Int
         var pwd : String = ""
+        var pwdComfirm : String = ""
 
         val registerFragmentButtonVerify = view.findViewById<Button>(R.id.registerFragment_button_verify)
         val registerFragmentTvQuit = view.findViewById<TextView>(R.id.registerFragment_tv_quit)
@@ -38,6 +40,7 @@ class RegisterFragment:Fragment() {
         val registerFragmentEtPhoneNum = view.findViewById<EditText>(R.id.registerFragment_et_phoneNumber)
         val registerFragmentEtVerify = view.findViewById<EditText>(R.id.registerFragment_et_verify)
         val registerFragmentEtPwd= view.findViewById<EditText>(R.id.registerFragment_et_pwd)
+        val registerFragmentEtPwdComfirm = view.findViewById<EditText>(R.id.registerFragment_et_pwdComfirm)
 
         registerFragmentTvQuit.setOnClickListener{
             goToFragment(SettingFragment())
@@ -84,10 +87,22 @@ class RegisterFragment:Fragment() {
                 pwd = p0.toString()
             }
         })
+        registerFragmentEtPwdComfirm.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                pwdComfirm = p0.toString()
+            }
+        })
         registerFragmentTvRegister.setOnClickListener{
-           onlineRegister(phoneNum,pwd)
-            Toast.makeText(context,"注册成功",Toast.LENGTH_SHORT).show()
-           goToFragment(SettingFragment())
+            Toast.makeText(context, userManager.register(phoneNum,pwd,pwdComfirm),Toast.LENGTH_SHORT).show()
+            if(userManager.register(phoneNum,pwd,pwdComfirm) == "Successfully register"){
+                goToFragment(SettingFragment())
+            }
         }
 
         return view
