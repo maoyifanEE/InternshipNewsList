@@ -38,7 +38,6 @@ class ProjectViewModel : ViewModel() {
                     netData.data?.let {
                         projectResponse.postValue(it)
                     }
-
                 }
             }
         })
@@ -46,8 +45,11 @@ class ProjectViewModel : ViewModel() {
 
 
     fun onRefresh() {
+        getProjectCategory()
         getProjectResponse()
     }
 
-    interface getCategoryId
+    interface getCategoryId{
+        fun getCid()
+    }
 }
