@@ -102,7 +102,7 @@ class SettingFragment:Fragment() {
         view.findViewById<Button>(R.id.settingFragment_button_logIn).setOnClickListener{
             refresh()
             if(TextUtils.isEmpty(settingFragmentEtId.text)){
-                toast("请输入手机号")
+                toast("请输入用户名")
             }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
                 toast("请输入密码")
             }else if(!userManager.isAgree){
