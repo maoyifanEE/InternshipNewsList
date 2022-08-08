@@ -32,7 +32,7 @@ class ProjectViewModel : ViewModel() {
 
     private fun getProjectResponse() {
 
-        ProjectRepository.getProjectList(1, 294, object : NetResult<ProjectData> {
+        ProjectRepository.getProjectList(1, categoryId, object : NetResult<ProjectData> {
             override fun onResult(netData: NetData<ProjectData>) {
                 if (netData.errorCode == 0) {
                     netData.data?.let {
@@ -49,6 +49,5 @@ class ProjectViewModel : ViewModel() {
         getProjectResponse()
     }
 
-    interface getCategoryId {
-    }
+    interface getCategoryId
 }
