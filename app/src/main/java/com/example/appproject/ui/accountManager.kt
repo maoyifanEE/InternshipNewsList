@@ -7,35 +7,9 @@ public class AccountManager {
         User("Li","Random!0879"),
         User("Liu","Random!0001"),
         User("Zhao","Just&123"),
-        User("Zhou","Hello$123"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
-        User("0","0"),
+        User("Zhou","Hello$123")
     )
+    lateinit var userName: String
     var isAgree:Boolean = false
     var isLogin:Boolean = false
     var isCheck:Boolean = false
