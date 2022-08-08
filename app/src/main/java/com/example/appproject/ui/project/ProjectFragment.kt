@@ -2,6 +2,7 @@ package com.example.appproject.ui.project
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.widget.ViewPager2
 import com.example.appproject.R
 import com.example.appproject.ui.User
+import com.google.android.material.tabs.TabLayout
 
 @SuppressLint("NotifyDataSetChanged")
 
@@ -25,19 +28,21 @@ class ProjectFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         projectAdapter = ProjectAdapter(requireActivity()) {
             onReplaceFragment(it)
         }
         return inflater.inflate(R.layout.fragment_project, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val projectSwipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.project_refresh)
         val projectRecyclerView = view.findViewById<RecyclerView>(R.id.project_recycler_view)
+
 //        val projectCategoryTabLayout =
 //            view.findViewById<TabLayout>(R.id.project_category_tab_layout)
         projectRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
+
         progressbar = view.findViewById(R.id.progress)
 
         //添加观察者
@@ -63,11 +68,16 @@ class ProjectFragment : Fragment() {
     }
 
     private fun onReplaceFragment(url: String) {
-        parentFragmentManager
+        requireActivity().supportFragmentManager
             .beginTransaction()
-            .replace(R.id.main_activity_fragment_container, ProjectDetailFragment(url))
+            .replace(R.id.project_fragment_container, ProjectDetailFragment(url))
             .addToBackStack(url)
             .commit()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("zyp","ProjectFragmentDestroyed")
     }
 
 
