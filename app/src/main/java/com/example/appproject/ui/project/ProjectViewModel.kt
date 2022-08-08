@@ -10,20 +10,53 @@ import com.example.wanandroidapi.repository.ProjectRepository
 
 
 class ProjectViewModel : ViewModel() {
-    private val _projectResponse = MutableLiveData<ProjectData>()
+    private val projectResponse = MutableLiveData<ProjectData>()
+    private val projectCategory = MutableLiveData<ProjectCategoryData>()
+    var shareProjectData: LiveData<ProjectData> = projectResponse
+    var shareProjectCategory: LiveData<ProjectCategoryData> = projectCategory
+    var categoryId = 294
+    var pageId = 1
 
-    var projectData: LiveData<ProjectData> = _projectResponse
 
-    fun getProjectResponse(categoryId:Int) {
+
+
+    private fun getProjectCategory() {
+        ProjectRepository.getProjectsCategory(object : NetResult<ProjectCategoryData> {
+            override fun onResult(netData: NetData<ProjectCategoryData>) {
+                if (netData.errorCode == 0) {
+                    netData.data?.let {
+                        Log.d("category", it.toString())
+                        projectCategory.postValue(it)
+                    }
+                }
+            }
+        })
+    }
+
+
+    private fun getProjectResponse() {
 
         ProjectRepository.getProjectList(1, categoryId, object : NetResult<ProjectData> {
             override fun onResult(netData: NetData<ProjectData>) {
                 if (netData.errorCode == 0) {
                     netData.data?.let {
-                        _projectResponse.postValue(it)
+                        projectResponse.postValue(it)
                     }
                 }
             }
         })
+    }
+
+    fun getCid(cid: Int) {
+        categoryId = cid
+    }
+
+    fun getPage(page: Int) {
+        pageId = page
+    }
+
+    fun onRefresh() {
+        getProjectCategory()
+        getProjectResponse()
     }
 }
