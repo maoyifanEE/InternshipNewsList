@@ -15,20 +15,24 @@ class ProjectViewModel : ViewModel() {
     var shareProjectData: LiveData<ProjectData> = projectResponse
     var shareProjectCategory: LiveData<ProjectCategoryData> = projectCategory
     var categoryId = 294
+    var pageId = 1
+
+
 
 
     private fun getProjectCategory() {
         ProjectRepository.getProjectsCategory(object : NetResult<ProjectCategoryData> {
             override fun onResult(netData: NetData<ProjectCategoryData>) {
                 if (netData.errorCode == 0) {
-                    Log.d("category", netData.data.toString())
                     netData.data?.let {
+                        Log.d("category", it.toString())
                         projectCategory.postValue(it)
                     }
                 }
             }
         })
     }
+
 
     private fun getProjectResponse() {
 
@@ -43,13 +47,16 @@ class ProjectViewModel : ViewModel() {
         })
     }
 
+    fun getCid(cid: Int) {
+        categoryId = cid
+    }
+
+    fun getPage(page: Int) {
+        pageId = page
+    }
 
     fun onRefresh() {
         getProjectCategory()
         getProjectResponse()
-    }
-
-    interface getCategoryId{
-        fun getCid()
     }
 }

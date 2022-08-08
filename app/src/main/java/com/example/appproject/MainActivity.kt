@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.appproject.ui.home.HomeFragment
 import com.example.appproject.ui.project.ProjectFragment
+import com.example.appproject.ui.project.ProjectSlidePagerFragment
 import com.example.appproject.ui.setting.SettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private val settingFragment = SettingFragment()
     private val homeFragment = HomeFragment()
-    private val projectFragment = ProjectFragment()
+    private val projectFragment = ProjectSlidePagerFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
