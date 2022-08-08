@@ -1,5 +1,5 @@
 package com.example.appproject.ui.setting
-//This note just for update test
+
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
