@@ -4,15 +4,9 @@ import android.app.Application
 import android.content.Context
 import java.lang.Math.random
 
-class MainApplication : Application() {
-    lateinit var context: Context
-    fun ss() {
-
-    }
+class MainApplication:Application() {
 
     companion object {
 
-        var str = ""
     }
-
 }
