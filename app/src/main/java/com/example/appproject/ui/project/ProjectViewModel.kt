@@ -10,10 +10,10 @@ import com.example.wanandroidapi.repository.ProjectRepository
 
 
 class ProjectViewModel : ViewModel() {
-    private val projectResponse = MutableLiveData<ProjectData>()
-    private val projectCategory = MutableLiveData<ProjectCategoryData>()
-    var shareProjectData: LiveData<ProjectData> = projectResponse
-    var shareProjectCategory: LiveData<ProjectCategoryData> = projectCategory
+    private val _projectResponse = MutableLiveData<ProjectData>()
+    private val _projectCategory = MutableLiveData<ProjectCategoryData>()
+    var projectData: LiveData<ProjectData> = _projectResponse
+    var projectCategory: LiveData<ProjectCategoryData> = _projectCategory
     var categoryId = 294
     var pageId = 1
 
@@ -26,7 +26,7 @@ class ProjectViewModel : ViewModel() {
                 if (netData.errorCode == 0) {
                     netData.data?.let {
                         Log.d("category", it.toString())
-                        projectCategory.postValue(it)
+                        _projectCategory.postValue(it)
                     }
                 }
             }
@@ -40,7 +40,7 @@ class ProjectViewModel : ViewModel() {
             override fun onResult(netData: NetData<ProjectData>) {
                 if (netData.errorCode == 0) {
                     netData.data?.let {
-                        projectResponse.postValue(it)
+                        _projectResponse.postValue(it)
                     }
                 }
             }

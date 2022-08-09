@@ -6,7 +6,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class ProjectPagerAdapter(projectFragment: Fragment) : FragmentStateAdapter(projectFragment) {
 
-//    private lateinit var fragmentList: List<ProjectFragment>
+    private lateinit var fragmentList: List<ProjectFragment>
+    private lateinit var categoryList: List<ProjectCategory>
 
 
 
