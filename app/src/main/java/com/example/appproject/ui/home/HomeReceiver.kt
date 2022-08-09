@@ -6,6 +6,7 @@ import android.content.Intent
 
 class HomeReceiver:BroadcastReceiver() {
     override fun onReceive(p0: Context?, p1: Intent?) {
-        
+        val isUserLogin: Boolean? = p1?.getBooleanExtra("state",false)
+
     }
 }
