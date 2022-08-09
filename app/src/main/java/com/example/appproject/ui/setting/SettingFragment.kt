@@ -2,10 +2,15 @@ package com.example.appproject.ui.setting
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -14,11 +19,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.appproject.R
 import com.example.appproject.ui.userManager
 import com.example.wanandroidapi.NetData
 import com.example.wanandroidapi.NetResult
 import com.example.wanandroidapi.repository.AccountRepository
+import com.google.gson.Gson
+import android.content.Context as Context1
 
 class SettingFragment:Fragment() {
     var idText : String = "0"
@@ -26,7 +34,6 @@ class SettingFragment:Fragment() {
 
 
     private lateinit var settingViewModel:SettingViewModel
-
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -37,6 +44,20 @@ class SettingFragment:Fragment() {
         val view:View = inflater.inflate(R.layout.setting_fragment, container, false)
 
         settingViewModel = ViewModelProvider(requireActivity()).get(SettingViewModel::class.java)
+
+
+
+
+
+        val verifyText = Array<TextView>(8){view.findViewById(R.id.settingFragment_tv_verify0)}
+        verifyText[0] = view.findViewById(R.id.settingFragment_tv_verify0)
+        verifyText[1] = view.findViewById(R.id.settingFragment_tv_verify1)
+        verifyText[2] = view.findViewById(R.id.settingFragment_tv_verify2)
+        verifyText[3] = view.findViewById(R.id.settingFragment_tv_verify3)
+        verifyText[4] = view.findViewById(R.id.settingFragment_tv_verify4)
+        verifyText[5] = view.findViewById(R.id.settingFragment_tv_verify5)
+        verifyText[6] = view.findViewById(R.id.settingFragment_tv_verify6)
+        verifyText[7] = view.findViewById(R.id.settingFragment_tv_verify7)
 
         val settingFragmentEtId : EditText = view.findViewById<EditText>(R.id.settingFragment_et_userName)
         val settingFragmentEtPwd : EditText = view.findViewById<EditText>(R.id.settingFragment_et_password)
@@ -110,8 +131,13 @@ class SettingFragment:Fragment() {
 //                Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
 //            }else{
 //                onlineCheck(idText,passwordText)
-                settingFragmentFlVerify.visibility = VISIBLE
-                settingFragmentBtLogIn.visibility = INVISIBLE
+            showWindow(view)
+
+//        Intent().also{intent ->
+//            intent.action = "com.example.broadcast.SETTING_NOTIFICATION"
+//            intent.putExtra("data","Notice me!")
+//            context?.let { it1 -> LocalBroadcastManager.getInstance(it1).sendBroadcast(intent) }
+//        }
 //                if (!userManager.isCheck){
 //                    Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
 //                }else{
@@ -121,11 +147,25 @@ class SettingFragment:Fragment() {
 //                }
 //            }
 
+
+
+
         }
 
 
 
+
         return view
+    }
+
+    private fun showWindow(view: View) {
+        view.findViewById<FrameLayout>(R.id.settingFragment_fl_verify).visibility = VISIBLE
+        view.findViewById<Button>(R.id.settingFragment_button_logIn).visibility = INVISIBLE
+        view.findViewById<ImageView>(R.id.settingFragment_iv_afterAgree).visibility = INVISIBLE
+        view.findViewById<EditText>(R.id.settingFragment_et_password).visibility = INVISIBLE
+        view.findViewById<TextView>(R.id.settingFragment_tv_pwdFind2).visibility = INVISIBLE
+        view.findViewById<TextView>(R.id.settingFragment_tv_agreement2).visibility = INVISIBLE
+
     }
 
 
@@ -201,6 +241,12 @@ class SettingFragment:Fragment() {
 //
 //    }
 
+    private val verifyWord = listOf<verifyWord>(
+        verifyWord("鸡","你","太","美")
+    )
+
 }
 
 data class User1(var coinCount: Int)
+
+data class verifyWord(val  one:String,val two:String,val three:String,val four:String)
