@@ -1,27 +1,22 @@
 package com.example.appproject.ui.project
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import kotlin.concurrent.thread
 
-class ProjectPagerAdapter(projectFragment: Fragment) : FragmentStateAdapter(projectFragment) {
+class ProjectPagerAdapter(
+    projectFragment: Fragment,
+) : FragmentStateAdapter(projectFragment) {
 
-//    private lateinit var fragmentList: List<ProjectFragment>
 
-
+    fun isEmpty() = projectCategoryList.isEmpty()
 
     override fun getItemCount(): Int {
-        return 5
+        return projectCategoryList.size
     }
+
 
     override fun createFragment(position: Int): Fragment {
-        return ProjectFragment()
+        return ProjectFragment(projectCategoryList[position])
     }
-
-
-
-
-
-
-
 }
