@@ -14,7 +14,7 @@ import com.example.appproject.R
 
 @SuppressLint("NotifyDataSetChanged")
 
-class ProjectFragment : Fragment() {
+class ProjectFragment(private val categoryId : Int) : Fragment() {
     private val projectViewModel = ProjectViewModel()
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var progressbar: View
@@ -36,8 +36,6 @@ class ProjectFragment : Fragment() {
         val projectSwipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.project_refresh)
         val projectRecyclerView = view.findViewById<RecyclerView>(R.id.project_recycler_view)
 
-//        val projectCategoryTabLayout =
-//            view.findViewById<TabLayout>(R.id.project_category_tab_layout)
         projectRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
         progressbar = view.findViewById(R.id.progress)
@@ -54,7 +52,7 @@ class ProjectFragment : Fragment() {
 
         //下拉刷新
         projectSwipeRefreshLayout.setOnRefreshListener {
-            projectViewModel.onRefresh()
+            projectViewModel.getProjectResponse(categoryId)
             projectSwipeRefreshLayout.isRefreshing = false
             projectRecyclerView.adapter?.notifyDataSetChanged()
         }
@@ -65,7 +63,6 @@ class ProjectFragment : Fragment() {
     }
 
     private fun onReplaceFragment(url: String) {
-//        requireActivity().supportFragmentManager
         parentFragmentManager
             .beginTransaction()
             .replace(R.id.project_fragment_container, ProjectDetailFragment(url))
@@ -83,6 +80,6 @@ class ProjectFragment : Fragment() {
         if (projectAdapter.isEmpty()) {
             progressbar.visibility = View.VISIBLE
         }
-        projectViewModel.onRefresh()
+        projectViewModel.getProjectResponse(categoryId)
     }
 }
