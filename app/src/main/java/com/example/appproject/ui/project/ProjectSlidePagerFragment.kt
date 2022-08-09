@@ -48,6 +48,5 @@ class ProjectSlidePagerFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("zyp", "ProjectSlidePagerFragmentDestroyed")
     }
 }

@@ -18,7 +18,6 @@ class ProjectPagerViewModel:ViewModel() {
             override fun onResult(netData: NetData<ProjectCategoryData>) {
                 if (netData.errorCode == 0) {
                     netData.data?.let {
-                        Log.d("zyp", it.toString())
                         _projectCategory.postValue(it)
                     }
                 }

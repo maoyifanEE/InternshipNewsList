@@ -63,7 +63,7 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
     }
 
     private fun onReplaceFragment(url: String) {
-        parentFragmentManager
+        requireActivity().supportFragmentManager
             .beginTransaction()
             .replace(R.id.project_fragment_container, ProjectDetailFragment(url))
             .addToBackStack(url)
