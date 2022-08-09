@@ -21,10 +21,11 @@ import com.example.appproject.ui.home.Test.title
 
 @SuppressLint("NotifyDataSetChanged")
 
-class ProjectFragment(private val categoryId: Int) : Fragment() {
+class ProjectFragment(private val categoryId : Int) : Fragment() {
     private val projectViewModel = ProjectViewModel()
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var progressbar: View
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +47,7 @@ class ProjectFragment(private val categoryId: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val projectSwipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.project_refresh)
         val projectRecyclerView = view.findViewById<RecyclerView>(R.id.project_recycler_view)
+
         projectRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
         progressbar = view.findViewById(R.id.progress)
