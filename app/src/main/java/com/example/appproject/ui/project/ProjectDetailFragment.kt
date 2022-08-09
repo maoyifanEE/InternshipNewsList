@@ -28,6 +28,5 @@ class ProjectDetailFragment(private val url: String) : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("zyp","ProjectDetailFragmentDestroyed")
     }
 }
