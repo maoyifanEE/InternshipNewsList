@@ -10,10 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.viewpager2.widget.ViewPager2
 import com.example.appproject.R
-import com.example.appproject.ui.User
-import com.google.android.material.tabs.TabLayout
 
 @SuppressLint("NotifyDataSetChanged")
 
@@ -46,7 +43,7 @@ class ProjectFragment : Fragment() {
         progressbar = view.findViewById(R.id.progress)
 
         //添加观察者
-        projectViewModel.shareProjectData.observe(requireActivity()) {
+        projectViewModel.projectData.observe(requireActivity()) {
             progressbar.visibility = View.GONE
             projectAdapter.refreshData(it.datas)
             projectRecyclerView.adapter?.notifyDataSetChanged()
@@ -68,7 +65,8 @@ class ProjectFragment : Fragment() {
     }
 
     private fun onReplaceFragment(url: String) {
-        requireActivity().supportFragmentManager
+//        requireActivity().supportFragmentManager
+        parentFragmentManager
             .beginTransaction()
             .replace(R.id.project_fragment_container, ProjectDetailFragment(url))
             .addToBackStack(url)
