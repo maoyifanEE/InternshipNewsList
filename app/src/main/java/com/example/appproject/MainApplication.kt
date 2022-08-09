@@ -6,12 +6,7 @@ import java.lang.Math.random
 
 class MainApplication:Application() {
 
-    fun ss() {
-
-    }
-
     companion object {
-        var str = ""
-    }
 
+    }
 }
