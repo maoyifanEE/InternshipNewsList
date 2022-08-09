@@ -144,18 +144,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.45" />
 
-    <TextView
-        android:id="@+id/settingFragment_tv_userAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.841" />
+
 
     <FrameLayout
         android:id="@+id/settingFragment_fl_verify"
@@ -180,16 +169,6 @@
             android:textColor="@color/black"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/settingFragment_tv_reload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="5dp"
-            android:text="刷新"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
-
         <FrameLayout
             android:background="@color/white"
             android:layout_marginStart="5dp"
@@ -198,7 +177,6 @@
             android:layout_marginEnd="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
 
             <TextView
                 android:text="字"
