@@ -21,22 +21,21 @@ import com.example.appproject.ui.home.Test.title
 
 @SuppressLint("NotifyDataSetChanged")
 
-class ProjectFragment(private val categoryId : Int) : Fragment() {
+class ProjectFragment(private val categoryId: Int) : Fragment() {
     private val projectViewModel = ProjectViewModel()
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var progressbar: View
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val projectBroadcastReceiver = MyBroadcastReceiver()
-//        val projectFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
-//            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
-//        }
-//        requireActivity().registerReceiver(projectBroadcastReceiver,projectFilter)
+        val projectBroadcastReceiver = MyBroadcastReceiver()
+        val projectFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
+            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+        }
+        requireActivity().registerReceiver(projectBroadcastReceiver,projectFilter)
         requireActivity().title = "Project"
         projectAdapter = ProjectAdapter(requireActivity()) {
             onReplaceFragment(it)
@@ -47,7 +46,6 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val projectSwipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.project_refresh)
         val projectRecyclerView = view.findViewById<RecyclerView>(R.id.project_recycler_view)
-
         projectRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
         progressbar = view.findViewById(R.id.progress)
