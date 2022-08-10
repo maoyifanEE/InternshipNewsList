@@ -2,25 +2,29 @@ package com.example.appproject.ui.setting
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.appproject.MusicPlayerActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.appproject.R
 import com.example.appproject.R.color.white
 import com.example.appproject.ui.userManager
+import com.example.appproject.ui.util.showToast
 import com.example.wanandroidapi.NetData
 import com.example.wanandroidapi.NetResult
 import com.example.wanandroidapi.repository.AccountRepository
+import com.google.gson.Gson
+import android.content.Context as Context1
 
 
 class SettingFragment:Fragment() {
@@ -42,6 +46,10 @@ class SettingFragment:Fragment() {
         if(context != null){
             val myContext = context
         }
+
+
+
+
 
         val verifyText = Array<TextView>(10){view.findViewById(R.id.settingFragment_tv_verify0)}
         verifyText[0] = view.findViewById(R.id.settingFragment_tv_verify0)
@@ -149,26 +157,16 @@ class SettingFragment:Fragment() {
 
 
         }
-        requireActivity().title = "Setting"
+
 
 
 
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val musicActivityButton = view.findViewById<View>(R.id.music_activity_text_view)
-        musicActivityButton.setOnClickListener {
-            val startMusicActivityIntent = Intent(requireActivity(),MusicPlayerActivity::class.java)
-            startActivity(startMusicActivityIntent)
-        }
-
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     @SuppressLint("ResourceAsColor")
     private fun showText(verifyText: Array<TextView>) {
-        val i : Int = 0
+        val i : Int = 1
         for(i in 0..7){
             verifyText[i].text = ""
             verifyText[i].setTextColor(R.color.white)
@@ -350,7 +348,7 @@ class SettingFragment:Fragment() {
                 }
             }
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
-            if(wordCheck(userAnswer,verifyWord[0])){
+            if(wordCheck(userAnswer,verifyWord[1])){
                 verifyText[9].text = "success"
             }
         }
@@ -423,13 +421,17 @@ class SettingFragment:Fragment() {
     }
 
     private fun wordCheck(userAnswer: MutableList<String>, verifyWord: verifyWord): Boolean {
-        return if(userAnswer[0] != verifyWord.one){
-            false
+        if(userAnswer[0] != verifyWord.one){
+            return false
         }else if(userAnswer[1] != verifyWord.two){
-            false
+            return  false
         }else if(userAnswer[2] != verifyWord.three){
-            false
-        }else userAnswer[3] == verifyWord.four
+            return false
+        }else if(userAnswer[3] != verifyWord.four){
+            return false
+        }else{
+            return true
+        }
     }
 
 
@@ -464,9 +466,6 @@ class SettingFragment:Fragment() {
 
             }
         })
-    }
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
 
@@ -521,7 +520,8 @@ class SettingFragment:Fragment() {
 //    }
 
     private val verifyWord = listOf<verifyWord>(
-        verifyWord("鸡","你","太","美","蔡","帅","徐","坤")
+        verifyWord("鸡","你","太","美","蔡","帅","徐","坤"),
+        verifyWord("科","先","真","帅","","","","")
     )
 }
 
