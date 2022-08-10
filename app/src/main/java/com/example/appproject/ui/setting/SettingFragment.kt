@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -127,41 +128,38 @@ class SettingFragment:Fragment() {
             userManager.isAgree = false
         }
         settingFragmentBtLogIn.setOnClickListener{
-//            if(TextUtils.isEmpty(settingFragmentEtId.text)){
-//                toast("请输入用户名")
-//            }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
-//                toast("请输入密码")
-//            }else if(!userManager.isAgree){
-//                Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
-//            }else{
-//                onlineCheck(idText,passwordText)
-            showWindow(view)
-            showText(verifyText)
-            verifyCheck(verifyText)
-
-//        Intent().also{intent ->
-//            intent.action = "com.example.broadcast.SETTING_NOTIFICATION"
-//            intent.putExtra("data","Notice me!")
-//            context?.let { it1 -> LocalBroadcastManager.getInstance(it1).sendBroadcast(intent) }
-//        }
-//                if (!userManager.isCheck){
-//                    Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
-//                }else{
-//                    Toast.makeText(context,"log in", Toast.LENGTH_SHORT).show()
-//                    userManager.logIn()
-//                    goToFragment(LogInFragment())
-//                }
-//            }
-
-
-
-
+            if(TextUtils.isEmpty(settingFragmentEtId.text)){
+                toast("请输入用户名")
+            }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
+                toast("请输入密码")
+            }else if(!userManager.isAgree){
+                Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
+            }else{
+                onlineCheck(idText,passwordText)
+                showWindow(view)
+                showText(verifyText)
+                verifyCheck(verifyText)
+            }
         }
 
 
 
 
+
+
+
+
         return view
+    }
+
+    private fun LogAfterCheck(){
+        if (!userManager.isCheck){
+            Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(context,"log in", Toast.LENGTH_SHORT).show()
+            userManager.logIn()
+            goToFragment(LogInFragment())
+        }
     }
 
     @SuppressLint("ResourceAsColor")
@@ -220,6 +218,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
         verifyText[1].setOnClickListener{
@@ -246,6 +245,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
         verifyText[2].setOnClickListener{
@@ -272,6 +272,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
         verifyText[3].setOnClickListener{
@@ -298,6 +299,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
         verifyText[4].setOnClickListener{
@@ -324,6 +326,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
         verifyText[5].setOnClickListener{
@@ -350,6 +353,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
         verifyText[6].setOnClickListener{
@@ -376,6 +380,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
         verifyText[7].setOnClickListener{
@@ -402,6 +407,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
         verifyText[8].setOnClickListener{
@@ -416,6 +422,7 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
+                LogAfterCheck()
             }
         }
     }
