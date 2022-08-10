@@ -27,5 +27,6 @@ data class Data(var curPage: Int, var datas: MutableList<ArticleItem>)
 data class ArticleItem(var title: String, var link: String,var collect: Boolean, var niceDate:String)
 class ViewModel: ViewModel() {
     var news = MutableLiveData<ArticleItem>()
+    val stateOfUser :Boolean = true
     fun getDatas():List<ArticleItem> = Test.articleList.data.datas
 }
