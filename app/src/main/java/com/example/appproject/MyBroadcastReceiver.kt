@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.example.appproject.ui.util.showToast
-import kotlin.math.log
 
 private const val TAG = "MyBroadcastReceiver"
 
@@ -20,5 +19,4 @@ class MyBroadcastReceiver : BroadcastReceiver() {
             }
         }
     }
-
 }
