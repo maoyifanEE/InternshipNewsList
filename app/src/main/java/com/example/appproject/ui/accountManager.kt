@@ -48,7 +48,6 @@ public class AccountManager {
     fun logOut(){
         isLogin = false
     }
-<<<<<<< HEAD
 
     /**
      * The function register is going to be test, it will failed if
@@ -158,7 +157,6 @@ public class AccountManager {
         "hello","Hello","Hi","hi"
     )
 
-=======
     fun register(id:String,pwd:String){
         if(index < (userList.size-1)){
             userList[index].userName = id
@@ -166,7 +164,6 @@ public class AccountManager {
             index++
         }
     }
->>>>>>> finished
 }
 
 val userManager = AccountManager()
