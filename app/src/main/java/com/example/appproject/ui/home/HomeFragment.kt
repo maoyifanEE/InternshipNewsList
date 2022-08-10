@@ -1,6 +1,7 @@
 package com.example.appproject.ui.home
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class HomeFragment : Fragment() {
     ): View {
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
         createRecyclerView(view)
+        requireActivity().title = "Home"
         return view
     }
     lateinit var viewModel: ViewModel
@@ -49,5 +51,12 @@ class HomeFragment : Fragment() {
         }
         return view
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("zyp","HomeFragmentDestroyed")
+    }
+
+
 
 }
