@@ -31,11 +31,11 @@ class ProjectFragment(private val categoryId: Int) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val projectBroadcastReceiver = MyBroadcastReceiver()
-        val projectFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
-            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
-        }
-        requireActivity().registerReceiver(projectBroadcastReceiver,projectFilter)
+//        val projectBroadcastReceiver = MyBroadcastReceiver()
+//        val projectFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
+//            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+//        }
+//        requireActivity().registerReceiver(projectBroadcastReceiver,projectFilter)
         requireActivity().title = "Project"
         projectAdapter = ProjectAdapter(requireActivity()) {
             onReplaceFragment(it)
