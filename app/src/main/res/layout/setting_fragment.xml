@@ -144,6 +144,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.45" />
 
+    <TextView
+        android:id="@+id/settingFragment_tv_userAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
+
 
 
     <FrameLayout
@@ -164,10 +177,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="请依次点击汉字以组成成语"
+            android:text="请依次点击汉字"
             android:textSize="25dp"
             android:textColor="@color/black"
             android:textStyle="bold" />
+        <TextView
+            android:layout_marginStart="200dp"
+            android:id="@+id/settingFragment_tv_reload"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="刷新"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 
         <FrameLayout
             android:background="@color/white"
