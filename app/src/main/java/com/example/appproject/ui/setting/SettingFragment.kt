@@ -166,7 +166,7 @@ class SettingFragment:Fragment() {
 
     @SuppressLint("ResourceAsColor")
     private fun showText(verifyText: Array<TextView>) {
-        val i : Int = 1
+        val i : Int = 0
         for(i in 0..7){
             verifyText[i].text = ""
             verifyText[i].setTextColor(R.color.white)
@@ -348,7 +348,7 @@ class SettingFragment:Fragment() {
                 }
             }
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
-            if(wordCheck(userAnswer,verifyWord[1])){
+            if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
             }
         }
@@ -520,8 +520,7 @@ class SettingFragment:Fragment() {
 //    }
 
     private val verifyWord = listOf<verifyWord>(
-        verifyWord("鸡","你","太","美","蔡","帅","徐","坤"),
-        verifyWord("科","先","真","帅","","","","")
+        verifyWord("鸡","你","太","美","蔡","帅","徐","坤")
     )
 }
 
