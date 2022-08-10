@@ -27,7 +27,6 @@ class ProjectSlidePagerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("zyp", "onCreateView")
         return inflater.inflate(R.layout.fragment_project_slide, container, false)
     }
 
@@ -48,6 +47,5 @@ class ProjectSlidePagerFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("zyp", "ProjectSlidePagerFragmentDestroyed")
     }
 }
