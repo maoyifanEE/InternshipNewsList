@@ -157,7 +157,7 @@ class SettingFragment:Fragment() {
 
 
         }
-
+        requireActivity().title = "Setting"
 
 
 
@@ -466,6 +466,9 @@ class SettingFragment:Fragment() {
 
             }
         })
+    }
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
 
