@@ -21,15 +21,14 @@ class BackgroundMusicService : Service() {
     private lateinit var musicPlayer: MediaPlayer
 
     init {
-        Log.d(TAG,"Service is running...")
+        Log.d(TAG, "Service is running...")
     }
 
 
 
     override fun onCreate() {
         super.onCreate()
-        "Service Created".showToast(this)
-        musicPlayer = MediaPlayer.create(applicationContext,R.raw.rickroll)
+        musicPlayer = MediaPlayer.create(applicationContext, R.raw.rickroll)
         musicPlayer.isLooping = false
     }
 
