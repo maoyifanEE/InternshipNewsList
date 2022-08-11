@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -135,7 +136,6 @@ class SettingFragment:Fragment() {
             userManager.isAgree = false
         }
         settingFragmentBtLogIn.setOnClickListener{
-
             if(TextUtils.isEmpty(settingFragmentEtId.text)){
                 toast("请输入用户名")
             }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
@@ -189,6 +189,11 @@ class SettingFragment:Fragment() {
                 if (notificationManager != null) {
                     notificationManager.notify(NOTIFICATION_ID,notification)
                 }
+            }
+            Intent(context,SettingService::class.java).also{
+                activity?.startService(it)
+                val dataString = idText
+                requireActivity().intent.putExtra("LOGIN",dataString)
             }
         }
     }
