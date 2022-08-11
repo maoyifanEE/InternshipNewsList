@@ -62,25 +62,25 @@ public class AccountManager {
      */
     fun registerCheck(userName:String, pwd:String, pwdConfirm:String):String{
         if(userName.isEmpty()){
-            return "Please enter the user name"
+            return "用户名不能为空"
         }else if(pwd.isEmpty()){
-            return "Please enter the password"
+            return "密码不能为空"
         }else if(pwdConfirm.isEmpty()){
-            return "Please confirm the password"
+            return "必须确认密码"
         }else if(!userNameIsValid(userName)){
-            return "The user name contains sensitive word"
+            return "用户名包含敏感词汇"
         }else if(userName.length > 25){
-            return "The user name is longer than 25 characters"
+            return "用户名长度不能超过25个字符"
         }else if(pwd.length < 8){
-            return "The password is shorted than 8 characters"
+            return "密码不能短于8个字符"
         }else if(!pwdIsValid(pwd)){
-            return "The password must be a combination of number,special symbol,uppercase and lowercase"
+            return "密码必须包含数字，大小写和特殊符号"
         }else if(pwdConfirm != pwd){
-            return "Please confirm the password"
+            return "密码核对失败"
         }else if(pwdIsTooEasy(pwd,userName)){
-            return "The password is too easy to guess"
+            return "密码过于简单"
         }else{
-            return "Valid username and password"
+            return "允许注册"
         }
     }
 

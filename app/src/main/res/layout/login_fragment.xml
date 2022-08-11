@@ -7,6 +7,7 @@
     tools:context=".ui.setting.LogInFragment">
 
     <TextView
+        android:id="@+id/logInFragment_tv_hello"
         android:layout_width="231dp"
         android:layout_height="70dp"
         android:text="Hello,MAO"

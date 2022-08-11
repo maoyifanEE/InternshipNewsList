@@ -100,7 +100,12 @@ class RegisterFragment:Fragment() {
             }
         })
         registerFragmentTvRegister.setOnClickListener{
-            onlineRegister(userName,pwd,pwdComfirm)
+            var string = userManager.registerCheck(userName,pwd,pwdComfirm)
+            if(string == "允许注册"){
+                onlineRegister(userName,pwd,pwdComfirm)
+            }else{
+                Toast.makeText(context,string,Toast.LENGTH_SHORT).show()
+            }
         }
 
         return view
@@ -109,8 +114,12 @@ class RegisterFragment:Fragment() {
     private fun onlineRegister(id:String,pwd:String,pwdConfirm:String){
         AccountRepository.register(id, pwd, pwdConfirm, object : NetResult<User> {
             override fun onResult(netData: NetData<User>) {
-//                Log.d("liyu", "register json : ${netData.json}")
-                Toast.makeText(context, netData.errorMsg, Toast.LENGTH_SHORT).show()
+                if(netData.errorMsg == ""){
+                    Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(context, netData.errorMsg, Toast.LENGTH_SHORT).show()
+                    Log.d("register",netData.errorMsg)
+                }
             }
         })
     }
