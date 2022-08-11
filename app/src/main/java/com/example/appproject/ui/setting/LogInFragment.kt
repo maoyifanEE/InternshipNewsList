@@ -28,7 +28,6 @@ class LogInFragment: Fragment() {
 
 
         view.findViewById<Button>(R.id.logInFragment_button).setOnClickListener{
-            val settingViewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
             userManager.logOut()
             Toast.makeText(context,"Log out",Toast.LENGTH_SHORT).show()
             goToFragment(SettingFragment())

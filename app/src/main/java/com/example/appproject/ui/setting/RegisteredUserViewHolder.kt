@@ -2,13 +2,10 @@ package com.example.appproject.ui.setting
 
 import android.view.View
 import android.widget.TextView
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appproject.R
 
-data class registeredUser(val name:String)
+class RegisteredUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val name : TextView = itemView.findViewById(R.id.register_user_name)
 
-val registeredUserList = listOf(
-    registeredUser("Mao")
-)
-
+}

@@ -21,6 +21,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.appproject.R
 import com.example.appproject.R.color.white
 import com.example.appproject.ui.userManager
@@ -36,7 +38,8 @@ class SettingFragment:Fragment() {
     val CHANNEL_NAME = "channelName"
     val CHANNEL_ID = "channelID"
 
-    private lateinit var settingViewModel:SettingViewModel
+
+
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -46,8 +49,12 @@ class SettingFragment:Fragment() {
     ): View? {
         val view:View = inflater.inflate(R.layout.setting_fragment, container, false)
 
-        settingViewModel = ViewModelProvider(requireActivity()).get(SettingViewModel::class.java)
         createNotificationChannel()
+
+
+        val userRv = view.findViewById<RecyclerView>(R.id.user_rv)
+        userRv.layoutManager = LinearLayoutManager(context)
+        userRv.adapter = SettingAdapter(registeredUserList)
 
 
 
@@ -153,6 +160,10 @@ class SettingFragment:Fragment() {
 
         return view
     }
+
+
+
+
 
     private fun createNotificationChannel() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -505,6 +516,8 @@ class SettingFragment:Fragment() {
             }
         })
     }
+
+
 
 
 
