@@ -14,16 +14,16 @@ import com.example.appproject.R
 
 class ProjectAdapter(
     private val activity: Activity,
-    private val projectList: MutableList<ProjectViewModel.Project> = mutableListOf(),
+    private val projectList: MutableList<Project> = mutableListOf(),
     private val projectLinkCallback: (String) -> Unit
 ) : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
 
 
-    fun addData(list: MutableList<ProjectViewModel.Project>) {
+    fun addData(list: MutableList<Project>) {
         projectList.addAll(list)
     }
 
-    fun refreshData(list: MutableList<ProjectViewModel.Project>) {
+    fun refreshData(list: MutableList<Project>) {
         projectList.clear()
         projectList.addAll(list)
     }
