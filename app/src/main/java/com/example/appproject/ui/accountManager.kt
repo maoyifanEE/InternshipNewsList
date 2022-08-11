@@ -157,6 +157,13 @@ public class AccountManager {
         "hello","Hello","Hi","hi"
     )
 
+    fun register(id:String,pwd:String){
+        if(index < (userList.size-1)){
+            userList[index].userName = id
+            userList[index].pwd = pwd
+            index++
+        }
+    }
 }
 
 val userManager = AccountManager()

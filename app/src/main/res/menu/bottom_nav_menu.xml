@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navi_button_square"
         android:icon="@drawable/ic_square_black_24dp"
-        android:title="@string/square" />
+        android:title="@string/setting" />
 
     <item
         android:id="@+id/navi_button_project"
