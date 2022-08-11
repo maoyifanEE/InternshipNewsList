@@ -114,7 +114,6 @@ class RegisterFragment:Fragment() {
     private fun onlineRegister(id:String,pwd:String,pwdConfirm:String){
         AccountRepository.register(id, pwd, pwdConfirm, object : NetResult<User> {
             override fun onResult(netData: NetData<User>) {
-//                Log.d("liyu", "register json : ${netData.json}")
                 if(netData.errorMsg == ""){
                     Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show()
                 }else{
