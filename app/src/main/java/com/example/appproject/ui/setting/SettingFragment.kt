@@ -82,7 +82,7 @@ class SettingFragment:Fragment() {
         settingFragmentTvAgreement.setOnClickListener{
             AlertDialog.Builder(context)
                 .setTitle("用户协议")
-                .setMessage("没啥看的，同意就完事了")
+                .setMessage("世界上只有一个中国，台湾是中国不可分割的一部分！")
                 .create()
                 .show()
         }
