@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.example.appproject.service.BackgroundMusicService
-import android.widget.TextView
 
 class MusicPlayerActivity : AppCompatActivity() {
     var serviceStatus: Boolean = false
