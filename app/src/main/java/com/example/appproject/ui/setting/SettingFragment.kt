@@ -2,14 +2,9 @@ package com.example.appproject.ui.setting
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +12,9 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.appproject.MusicPlayerActivity
 import com.example.appproject.R
 import com.example.appproject.R.color.white
 import com.example.appproject.ui.userManager
@@ -30,11 +24,9 @@ import com.example.wanandroidapi.repository.AccountRepository
 
 
 class SettingFragment:Fragment() {
-    var userNameText : String = "0"
+    var idText : String = "0"
     var passwordText : String = "0"
-    val NOTIFICATION_ID = 0
-    val CHANNEL_NAME = "channelName"
-    val CHANNEL_ID = "channelID"
+
 
     private lateinit var settingViewModel:SettingViewModel
 
@@ -47,12 +39,9 @@ class SettingFragment:Fragment() {
         val view:View = inflater.inflate(R.layout.setting_fragment, container, false)
 
         settingViewModel = ViewModelProvider(requireActivity()).get(SettingViewModel::class.java)
-        createNotificationChannel()
-
-
-
-
-
+        if(context != null){
+            val myContext = context
+        }
 
         val verifyText = Array<TextView>(10){view.findViewById(R.id.settingFragment_tv_verify0)}
         verifyText[0] = view.findViewById(R.id.settingFragment_tv_verify0)
@@ -86,7 +75,7 @@ class SettingFragment:Fragment() {
         settingFragmentTvPwdFind.setOnClickListener{
             AlertDialog.Builder(context)
                 .setTitle("密码找回")
-                .setMessage("该功能暂未开放")
+                .setMessage(idText.toString())
                 .create()
                 .show()
         }
@@ -105,7 +94,7 @@ class SettingFragment:Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                userNameText = p0.toString()
+                idText = p0.toString()
             }
         })
         settingFragmentEtPwd.addTextChangedListener(object : TextWatcher{
@@ -130,67 +119,51 @@ class SettingFragment:Fragment() {
             userManager.isAgree = false
         }
         settingFragmentBtLogIn.setOnClickListener{
-            if(TextUtils.isEmpty(settingFragmentEtId.text)){
-                toast("请输入用户名")
-            }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
-                toast("请输入密码")
-            }else if(!userManager.isAgree){
-                Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
-            }else{
-                onlineCheck(userNameText,passwordText)
-                showWindow(view)
-                showText(verifyText)
-                verifyCheck(verifyText)
-            }
+//            if(TextUtils.isEmpty(settingFragmentEtId.text)){
+//                toast("请输入用户名")
+//            }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
+//                toast("请输入密码")
+//            }else if(!userManager.isAgree){
+//                Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
+//            }else{
+//                onlineCheck(idText,passwordText)
+            showWindow(view)
+            showText(verifyText)
+            verifyCheck(verifyText)
+
+//        Intent().also{intent ->
+//            intent.action = "com.example.broadcast.SETTING_NOTIFICATION"
+//            intent.putExtra("data","Notice me!")
+//            context?.let { it1 -> LocalBroadcastManager.getInstance(it1).sendBroadcast(intent) }
+//        }
+//                if (!userManager.isCheck){
+//                    Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
+//                }else{
+//                    Toast.makeText(context,"log in", Toast.LENGTH_SHORT).show()
+//                    userManager.logIn()
+//                    goToFragment(LogInFragment())
+//                }
+//            }
+
+
+
+
         }
-
-
-
-
-
+        requireActivity().title = "Setting"
 
 
 
         return view
     }
 
-    private fun createNotificationChannel() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel(CHANNEL_ID,CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT).apply {
-            }
-            val manager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            manager.createNotificationChannel(channel)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val musicActivityButton = view.findViewById<View>(R.id.music_activity_text_view)
+        musicActivityButton.setOnClickListener {
+            val startMusicActivityIntent = Intent(requireActivity(),MusicPlayerActivity::class.java)
+            startActivity(startMusicActivityIntent)
         }
-    }
 
-    private fun LogAfterCheck(){
-        if (!userManager.isCheck){
-            Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
-            goToFragment(SettingFragment())
-        }else{
-            Toast.makeText(context,"log in", Toast.LENGTH_SHORT).show()
-            userManager.logIn()
-            goToFragment(LogInFragment())
-            val notification = context?.let {
-                NotificationCompat.Builder(it,CHANNEL_ID)
-                    .setContentTitle("新闻app")
-                    .setContentText("登录成功，欢迎$userNameText")
-                    .setSmallIcon(androidx.constraintlayout.widget.R.drawable.notification_icon_background)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .build()
-            }
-            val notificationManager = context?.let { NotificationManagerCompat.from(it) }
-            if (notification != null) {
-                if (notificationManager != null) {
-                    notificationManager.notify(NOTIFICATION_ID,notification)
-                }
-            }
-            Intent(context,SettingService::class.java).also{
-                activity?.startService(it)
-                val dataString = userNameText
-                requireActivity().intent.putExtra("LOGIN",dataString)
-            }
-        }
+        super.onViewCreated(view, savedInstanceState)
     }
 
     @SuppressLint("ResourceAsColor")
@@ -249,7 +222,6 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
         verifyText[1].setOnClickListener{
@@ -276,7 +248,6 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
         verifyText[2].setOnClickListener{
@@ -303,7 +274,6 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
         verifyText[3].setOnClickListener{
@@ -330,7 +300,6 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
         verifyText[4].setOnClickListener{
@@ -357,7 +326,6 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
         verifyText[5].setOnClickListener{
@@ -384,7 +352,6 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
         verifyText[6].setOnClickListener{
@@ -411,7 +378,6 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
         verifyText[7].setOnClickListener{
@@ -438,7 +404,6 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
         verifyText[8].setOnClickListener{
@@ -453,23 +418,18 @@ class SettingFragment:Fragment() {
             verifyText[9].text = userAnswer[0]+userAnswer[1]+userAnswer[2]+userAnswer[3]
             if(wordCheck(userAnswer,verifyWord[0])){
                 verifyText[9].text = "success"
-                LogAfterCheck()
             }
         }
     }
 
     private fun wordCheck(userAnswer: MutableList<String>, verifyWord: verifyWord): Boolean {
-        if(userAnswer[0] != verifyWord.one){
-            return false
+        return if(userAnswer[0] != verifyWord.one){
+            false
         }else if(userAnswer[1] != verifyWord.two){
-            return  false
+            false
         }else if(userAnswer[2] != verifyWord.three){
-            return false
-        }else if(userAnswer[3] != verifyWord.four){
-            return false
-        }else{
-            return true
-        }
+            false
+        }else userAnswer[3] == verifyWord.four
     }
 
 
@@ -504,6 +464,9 @@ class SettingFragment:Fragment() {
 
             }
         })
+    }
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
 

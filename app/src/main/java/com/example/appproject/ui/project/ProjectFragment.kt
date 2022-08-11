@@ -53,21 +53,21 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
         progressbar = view.findViewById(R.id.progress)
 
         //添加观察者
-//        projectViewModel.projectData.observe(requireActivity()) {
-//            progressbar.visibility = View.GONE
-//            projectAdapter.refreshData(it.datas)
-//            projectRecyclerView.adapter?.notifyDataSetChanged()
-//        }
+        projectViewModel.projectData.observe(requireActivity()) {
+            progressbar.visibility = View.GONE
+            projectAdapter.refreshData(it.datas)
+            projectRecyclerView.adapter?.notifyDataSetChanged()
+        }
 
         projectRecyclerView.adapter = projectAdapter
 
 
-//        //下拉刷新
-//        projectSwipeRefreshLayout.setOnRefreshListener {
-//            projectViewModel.getProjectResponse(categoryId)
-//            projectSwipeRefreshLayout.isRefreshing = false
-//            projectRecyclerView.adapter?.notifyDataSetChanged()
-//        }
+        //下拉刷新
+        projectSwipeRefreshLayout.setOnRefreshListener {
+            projectViewModel.getProjectResponse(categoryId)
+            projectSwipeRefreshLayout.isRefreshing = false
+            projectRecyclerView.adapter?.notifyDataSetChanged()
+        }
 
         initData()
 
@@ -92,6 +92,6 @@ class ProjectFragment(private val categoryId : Int) : Fragment() {
         if (projectAdapter.isEmpty()) {
             progressbar.visibility = View.VISIBLE
         }
-//        projectViewModel.getProjectResponse(categoryId)
+        projectViewModel.getProjectResponse(categoryId)
     }
 }
