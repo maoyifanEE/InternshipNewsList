@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -20,23 +19,18 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.appproject.R
 import com.example.appproject.R.color.white
 import com.example.appproject.ui.userManager
-import com.example.appproject.ui.util.showToast
 import com.example.wanandroidapi.NetData
 import com.example.wanandroidapi.NetResult
 import com.example.wanandroidapi.repository.AccountRepository
-import com.google.gson.Gson
 
 
 class SettingFragment:Fragment() {
-    var idText : String = "0"
+    var userNameText : String = "0"
     var passwordText : String = "0"
     val NOTIFICATION_ID = 0
     val CHANNEL_NAME = "channelName"
@@ -92,7 +86,7 @@ class SettingFragment:Fragment() {
         settingFragmentTvPwdFind.setOnClickListener{
             AlertDialog.Builder(context)
                 .setTitle("密码找回")
-                .setMessage(idText.toString())
+                .setMessage("该功能暂未开放")
                 .create()
                 .show()
         }
@@ -111,7 +105,7 @@ class SettingFragment:Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                idText = p0.toString()
+                userNameText = p0.toString()
             }
         })
         settingFragmentEtPwd.addTextChangedListener(object : TextWatcher{
@@ -143,7 +137,7 @@ class SettingFragment:Fragment() {
             }else if(!userManager.isAgree){
                 Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
             }else{
-                onlineCheck(idText,passwordText)
+                onlineCheck(userNameText,passwordText)
                 showWindow(view)
                 showText(verifyText)
                 verifyCheck(verifyText)
@@ -172,14 +166,15 @@ class SettingFragment:Fragment() {
     private fun LogAfterCheck(){
         if (!userManager.isCheck){
             Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
+            goToFragment(SettingFragment())
         }else{
             Toast.makeText(context,"log in", Toast.LENGTH_SHORT).show()
             userManager.logIn()
             goToFragment(LogInFragment())
             val notification = context?.let {
                 NotificationCompat.Builder(it,CHANNEL_ID)
-                    .setContentTitle("Awesome notification")
-                    .setContentText("This is the content text")
+                    .setContentTitle("新闻app")
+                    .setContentText("登录成功，欢迎$userNameText")
                     .setSmallIcon(androidx.constraintlayout.widget.R.drawable.notification_icon_background)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .build()
@@ -192,7 +187,7 @@ class SettingFragment:Fragment() {
             }
             Intent(context,SettingService::class.java).also{
                 activity?.startService(it)
-                val dataString = idText
+                val dataString = userNameText
                 requireActivity().intent.putExtra("LOGIN",dataString)
             }
         }
