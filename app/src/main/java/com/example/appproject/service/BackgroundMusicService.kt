@@ -15,7 +15,6 @@ import com.example.appproject.R
 import com.example.appproject.ui.util.showToast
 
 class BackgroundMusicService : Service() {
-
     private val TAG = "BackgroundMusicService"
 
     private lateinit var musicPlayer: MediaPlayer
