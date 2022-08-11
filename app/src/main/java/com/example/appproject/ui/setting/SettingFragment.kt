@@ -2,6 +2,10 @@ package com.example.appproject.ui.setting
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -13,7 +17,10 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -25,13 +32,14 @@ import com.example.wanandroidapi.NetData
 import com.example.wanandroidapi.NetResult
 import com.example.wanandroidapi.repository.AccountRepository
 import com.google.gson.Gson
-import android.content.Context as Context1
 
 
 class SettingFragment:Fragment() {
     var idText : String = "0"
     var passwordText : String = "0"
-
+    val NOTIFICATION_ID = 0
+    val CHANNEL_NAME = "channelName"
+    val CHANNEL_ID = "channelID"
 
     private lateinit var settingViewModel:SettingViewModel
 
@@ -44,9 +52,8 @@ class SettingFragment:Fragment() {
         val view:View = inflater.inflate(R.layout.setting_fragment, container, false)
 
         settingViewModel = ViewModelProvider(requireActivity()).get(SettingViewModel::class.java)
-        if(context != null){
-            val myContext = context
-        }
+        createNotificationChannel()
+
 
 
 
@@ -128,6 +135,7 @@ class SettingFragment:Fragment() {
             userManager.isAgree = false
         }
         settingFragmentBtLogIn.setOnClickListener{
+
             if(TextUtils.isEmpty(settingFragmentEtId.text)){
                 toast("请输入用户名")
             }else if(TextUtils.isEmpty(settingFragmentEtPwd.text)){
@@ -152,6 +160,15 @@ class SettingFragment:Fragment() {
         return view
     }
 
+    private fun createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(CHANNEL_ID,CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT).apply {
+            }
+            val manager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
+
     private fun LogAfterCheck(){
         if (!userManager.isCheck){
             Toast.makeText(context,"用户名或密码错误",Toast.LENGTH_SHORT).show()
@@ -159,6 +176,20 @@ class SettingFragment:Fragment() {
             Toast.makeText(context,"log in", Toast.LENGTH_SHORT).show()
             userManager.logIn()
             goToFragment(LogInFragment())
+            val notification = context?.let {
+                NotificationCompat.Builder(it,CHANNEL_ID)
+                    .setContentTitle("Awesome notification")
+                    .setContentText("This is the content text")
+                    .setSmallIcon(androidx.constraintlayout.widget.R.drawable.notification_icon_background)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .build()
+            }
+            val notificationManager = context?.let { NotificationManagerCompat.from(it) }
+            if (notification != null) {
+                if (notificationManager != null) {
+                    notificationManager.notify(NOTIFICATION_ID,notification)
+                }
+            }
         }
     }
 
