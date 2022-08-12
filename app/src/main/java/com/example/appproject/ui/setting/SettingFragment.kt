@@ -32,8 +32,8 @@ import com.example.wanandroidapi.repository.AccountRepository
 
 
 class SettingFragment:Fragment() {
-    var userNameText : String = "0"
-    var passwordText : String = "0"
+    var userNameText : String = ""
+    var passwordText : String = ""
     val NOTIFICATION_ID = 0
     val CHANNEL_NAME = "channelName"
     val CHANNEL_ID = "channelID"
@@ -56,7 +56,8 @@ class SettingFragment:Fragment() {
         userRv.layoutManager = LinearLayoutManager(context)
         userRv.adapter = SettingAdapter(registeredUserList)
 
-
+        val settingSharePref = requireActivity().getSharedPreferences("settingPref",0)
+        val editor = settingSharePref.edit()
 
 
 
@@ -87,13 +88,17 @@ class SettingFragment:Fragment() {
 
 //        userRecyclerView.adapter = SettingAdapter(userList)
 
+        var userNameFromUser = settingSharePref.getString("userName",null)
+        var pwdFromUser = settingSharePref.getString("pwd",null)
+        settingFragmentEtId.setText(userNameFromUser)
+        settingFragmentEtPwd.setText(pwdFromUser)
         settingFragmentTvRegister.setOnClickListener{
             goToFragment(RegisterFragment())
         }
         settingFragmentTvPwdFind.setOnClickListener{
             AlertDialog.Builder(context)
                 .setTitle("密码找回")
-                .setMessage("该功能暂未开放")
+                .setMessage("老子不会")
                 .create()
                 .show()
         }
@@ -113,6 +118,10 @@ class SettingFragment:Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {
                 userNameText = p0.toString()
+                editor.apply(){
+                    putString("userName",userNameText)
+                    apply()
+                }
             }
         })
         settingFragmentEtPwd.addTextChangedListener(object : TextWatcher{
@@ -124,8 +133,13 @@ class SettingFragment:Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {
                 passwordText = p0.toString()
+                editor.apply(){
+                    putString("pwd",passwordText)
+                    apply()
+                }
             }
         })
+
         settingFragmentIvBeforeAgree.setOnClickListener{
             settingFragmentIvBeforeAgree.visibility = INVISIBLE
             settingFragmentIvAfterAgree.visibility = VISIBLE
@@ -144,10 +158,12 @@ class SettingFragment:Fragment() {
             }else if(!userManager.isAgree){
                 Toast.makeText(context,"请先同意用户协议",Toast.LENGTH_SHORT).show()
             }else{
+
                 onlineCheck(userNameText,passwordText)
                 showWindow(view)
                 showText(verifyText)
                 verifyCheck(verifyText)
+
             }
         }
 
@@ -202,6 +218,7 @@ class SettingFragment:Fragment() {
                 requireActivity().intent.putExtra("LOGIN",dataString)
             }
         }
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -231,7 +248,7 @@ class SettingFragment:Fragment() {
         verifyText[tem4].text = verifyWord[i].four
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "SetTextI18n")
     private fun verifyCheck(verifyText: Array<TextView>) {
         var userAnswer = mutableListOf<String>("*","*","*","*")
         var clickFlag = mutableListOf<Boolean>(false,false,false,false,false,false,false,false)
