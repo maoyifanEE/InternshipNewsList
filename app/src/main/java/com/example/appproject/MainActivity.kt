@@ -1,9 +1,14 @@
 package com.example.appproject
 
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.appproject.ui.home.HomeFragment
+import com.example.appproject.ui.home.ViewModel
 import com.example.appproject.ui.project.ProjectFragment
 import com.example.appproject.ui.project.ProjectSlidePagerFragment
 import com.example.appproject.ui.setting.SettingFragment
@@ -14,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private val settingFragment = SettingFragment()
     private val homeFragment = HomeFragment()
     private val projectFragment = ProjectSlidePagerFragment()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +38,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
 
     private fun onReplace(fragment: Fragment) {
         supportFragmentManager
