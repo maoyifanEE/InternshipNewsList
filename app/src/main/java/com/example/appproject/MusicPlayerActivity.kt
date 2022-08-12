@@ -30,7 +30,6 @@ class MusicPlayerActivity : AppCompatActivity() {
                                 button.text = "Start"
                                 serviceStatus = false
                             }
-
                         }
                     }
             }
