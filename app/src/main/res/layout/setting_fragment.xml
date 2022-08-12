@@ -123,11 +123,21 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="52dp"
+        android:inputType="textPassword"
         android:hint="密码"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settingFragment_et_userName"
         app:layout_constraintVertical_bias="0.08" />
+
+    <ImageView
+        android:id="@+id/settingFragment_iv_passwordSee"
+        android:layout_width="46dp"
+        android:layout_height="44dp"
+        app:layout_constraintEnd_toEndOf="@id/settingFragment_et_password"
+        app:layout_constraintTop_toTopOf="@id/settingFragment_et_password"
+        app:layout_constraintBottom_toBottomOf="@id/settingFragment_et_password"
+        android:src="@drawable/eye" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -290,127 +300,12 @@
 
         </FrameLayout>
 
+
+
     </FrameLayout>
 
 
 
-    <FrameLayout
-        android:id="@+id/settingFragment_fl_verify"
-        android:visibility="invisible"
-        android:background="@color/purple_500"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:text="请依次点击汉字以组成成语"
-            android:textSize="25dp"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
-        <FrameLayout
-            android:background="@color/white"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:text="字"
-                android:id="@+id/settingFragment_tv_verify0"
-                android:textSize="26dp"
-                android:textStyle="italic"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="67dp"
-                android:layout_marginTop="122dp" />
-            <TextView
-                android:text="字"
-                android:id="@+id/settingFragment_tv_verify1"
-                android:textSize="26dp"
-                android:textStyle="italic"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="57dp" />
-            <TextView
-                android:text="字"
-                android:id="@+id/settingFragment_tv_verify2"
-                android:textSize="26dp"
-                android:textStyle="italic"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="90dp"
-                android:layout_marginTop="197dp" />
-            <TextView
-                android:text="字"
-                android:id="@+id/settingFragment_tv_verify3"
-                android:textSize="26dp"
-                android:textStyle="italic"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
-                android:layout_marginTop="75dp" />
-            <TextView
-                android:text="字"
-                android:id="@+id/settingFragment_tv_verify4"
-                android:textSize="26dp"
-                android:textStyle="italic"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
-                android:layout_marginTop="39dp" />
-            <TextView
-                android:text="字"
-                android:id="@+id/settingFragment_tv_verify5"
-                android:textSize="26dp"
-                android:textStyle="italic"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="90dp"
-                android:layout_marginTop="80dp" />
-            <TextView
-                android:text="字"
-                android:id="@+id/settingFragment_tv_verify6"
-                android:textSize="26dp"
-                android:textStyle="italic"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="293dp"
-                android:layout_marginTop="97dp" />
-
-            <TextView
-                android:id="@+id/settingFragment_tv_verify7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="171dp"
-                android:layout_marginTop="176dp"
-                android:text="字"
-                android:textColor="@color/black"
-                android:textSize="26dp"
-                android:textStyle="italic" />
-
-        </FrameLayout>
-
-    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,9 +8,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.SystemClock
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -76,6 +79,7 @@ class SettingFragment:Fragment() {
 
         val settingFragmentEtId : EditText = view.findViewById<EditText>(R.id.settingFragment_et_userName)
         val settingFragmentEtPwd : EditText = view.findViewById<EditText>(R.id.settingFragment_et_password)
+        val settingFragmentIvPasswordSee : ImageView = view.findViewById<ImageView>(R.id.settingFragment_iv_passwordSee)
         val settingFragmentIvBeforeAgree : ImageView = view.findViewById<ImageView>(R.id.settingFragment_iv_beforeAgree)
         val settingFragmentIvAfterAgree : ImageView = view.findViewById<ImageView>(R.id.settingFragment_iv_afterAgree)
         val settingFragmentTvAgreement : TextView = view.findViewById<TextView>(R.id.settingFragment_tv_agreement2)
@@ -98,7 +102,7 @@ class SettingFragment:Fragment() {
         settingFragmentTvPwdFind.setOnClickListener{
             AlertDialog.Builder(context)
                 .setTitle("密码找回")
-                .setMessage("老子不会")
+                .setMessage("微信转账300元解锁功能")
                 .create()
                 .show()
         }
@@ -108,6 +112,18 @@ class SettingFragment:Fragment() {
                 .setMessage("世界上只有一个中国，台湾是中国不可分割的一部分！")
                 .create()
                 .show()
+        }
+        var pwdCanBeSaw = true
+        settingFragmentIvPasswordSee.setOnClickListener{
+//            if(pwdCanBeSaw){
+//                settingFragmentEtPwd.inputType = 1
+//            }else{
+//                settingFragmentEtPwd.inputType = 129
+//            }
+//            pwdCanBeSaw = !pwdCanBeSaw
+            settingFragmentEtPwd.inputType = 1       //User now can see the password
+
+            Handler().postDelayed({settingFragmentEtPwd.inputType = 129}, 1000) //User cannot see the password after 1 sec
         }
         settingFragmentEtId.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -176,7 +192,6 @@ class SettingFragment:Fragment() {
 
         return view
     }
-
 
 
 
