@@ -216,6 +216,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:src="@drawable/caixukun"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
             <TextView
                 android:text="字"
                 android:id="@+id/settingFragment_tv_verify0"

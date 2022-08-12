@@ -238,29 +238,49 @@ class SettingFragment:Fragment() {
 
     @SuppressLint("ResourceAsColor")
     private fun showText(verifyText: Array<TextView>) {
-        val i : Int = 0
+        val verifyWordChoose : Int = 0
         for(i in 0..7){
             verifyText[i].text = ""
             verifyText[i].setTextColor(R.color.white)
         }
-        var tem1:Int
-        var tem2:Int
-        var tem3:Int
-        var tem4:Int
-        tem1 = (0..7).random()
-        do{
-            tem2 = (0..7).random()
-        }while (tem2 == tem1)
-        do{
-            tem3 = (0..7).random()
-        }while ((tem3 == tem2) || (tem3 == tem1))
-        do{
-            tem4 = (0..7).random()
-        }while ((tem4 == tem2) || (tem4 == tem1) || (tem4 == tem3))
-        verifyText[tem1].text = verifyWord[i].one
-        verifyText[tem2].text = verifyWord[i].two
-        verifyText[tem3].text = verifyWord[i].three
-        verifyText[tem4].text = verifyWord[i].four
+        verifyText[0].text = verifyWord[verifyWordChoose].one
+        verifyText[1].text = verifyWord[verifyWordChoose].two
+        verifyText[2].text = verifyWord[verifyWordChoose].three
+        verifyText[3].text = verifyWord[verifyWordChoose].four
+        verifyText[4].text = verifyWord[verifyWordChoose].fakeOne
+        verifyText[5].text = verifyWord[verifyWordChoose].fakeTwo
+        verifyText[6].text = verifyWord[verifyWordChoose].fakeThree
+        verifyText[7].text = verifyWord[verifyWordChoose].fakeFour
+        var pos1 = 0
+        var pos2 = 0
+        var temp = ""
+        for(i in 0..7){
+            pos1 = (0..7).random()
+            pos2 = (0..7).random()
+            temp = verifyText[pos1].text.toString()
+            verifyText[pos1].text = verifyText[pos2].text
+            verifyText[pos2].text = temp
+        }
+//        var tem1:Int
+//        var tem2:Int
+//        var tem3:Int
+//        var tem4:Int
+//
+//        tem1 = (0..7).random()
+//        do{
+//            tem2 = (0..7).random()
+//        }while (tem2 == tem1)
+//        do{
+//            tem3 = (0..7).random()
+//        }while ((tem3 == tem2) || (tem3 == tem1))
+//        do{
+//            tem4 = (0..7).random()
+//        }while ((tem4 == tem2) || (tem4 == tem1) || (tem4 == tem3))
+//        verifyText[tem1].text = verifyWord[i].one
+//        verifyText[tem2].text = verifyWord[i].two
+//        verifyText[tem3].text = verifyWord[i].three
+//        verifyText[tem4].text = verifyWord[i].four
+
     }
 
     @SuppressLint("ResourceAsColor", "SetTextI18n")
