@@ -31,7 +31,7 @@ class RegisterFragment:Fragment() {
         val view:View = inflater.inflate(R.layout.register_fragment, container, false)
 
         var userName : String = ""
-        var verification : Int
+        var verification : String = ""
         var pwd : String = ""
         var pwdComfirm : String = ""
 
@@ -74,7 +74,7 @@ class RegisterFragment:Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                verification = p0.toString().toInt()
+                verification = p0.toString()
             }
         })
         registerFragmentEtPwd.addTextChangedListener(object : TextWatcher{
@@ -101,7 +101,9 @@ class RegisterFragment:Fragment() {
         })
         registerFragmentTvRegister.setOnClickListener{
             var string = userManager.registerCheck(userName,pwd,pwdComfirm)
-            if(string == "允许注册"){
+            if(verification != "123456"){
+                Toast.makeText(context,"验证码错误",Toast.LENGTH_SHORT).show()
+            }else if(string == "允许注册"){
                 onlineRegister(userName,pwd,pwdComfirm)
             }else{
                 Toast.makeText(context,string,Toast.LENGTH_SHORT).show()
