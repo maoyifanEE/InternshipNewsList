@@ -1,5 +1,7 @@
 package com.example.appproject.ui.home
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appproject.R
 import com.example.appproject.ui.User
+import kotlinx.coroutines.newFixedThreadPoolContext
 
 @SuppressLint("NotifyDataSetChanged")
 class HomeFragment : Fragment() {
@@ -38,17 +41,16 @@ class HomeFragment : Fragment() {
         val rv = view.findViewById<RecyclerView>(R.id.rv)
         rv.layoutManager = LinearLayoutManager(context)
         rv.adapter = adapter
-
         
         adapter.setOnItemClickListener {
-//            Toast.makeText(activity,"Check the detail",Toast.LENGTH_LONG).show()
             viewModel.news.value = it
+
             val fragmentManager:FragmentManager = parentFragmentManager
             val transition: FragmentTransaction =fragmentManager.beginTransaction()
             transition.replace(R.id.main_activity_fragment_container, ContentFragment())
                 .addToBackStack(null).commit()
-//            transition.commit()
         }
+
         return view
     }
 
