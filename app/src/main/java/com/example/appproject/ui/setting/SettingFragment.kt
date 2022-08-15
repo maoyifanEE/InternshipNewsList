@@ -32,6 +32,7 @@ import com.example.appproject.ui.userManager
 import com.example.wanandroidapi.NetData
 import com.example.wanandroidapi.NetResult
 import com.example.wanandroidapi.repository.AccountRepository
+import kotlin.properties.Delegates
 
 
 class SettingFragment:Fragment() {
@@ -94,6 +95,7 @@ class SettingFragment:Fragment() {
 
         var userNameFromUser = settingSharePref.getString("userName",null)
         var pwdFromUser = settingSharePref.getString("pwd",null)
+        userManager.isAgree = settingSharePref.getBoolean("isAgree",false)
         settingFragmentEtId.setText(userNameFromUser)
         settingFragmentEtPwd.setText(pwdFromUser)
         settingFragmentTvRegister.setOnClickListener{
@@ -155,16 +157,31 @@ class SettingFragment:Fragment() {
                 }
             }
         })
+        if(userManager.isAgree){
+            settingFragmentIvBeforeAgree.visibility = INVISIBLE
+            settingFragmentIvAfterAgree.visibility = VISIBLE
+        }else{
+            settingFragmentIvBeforeAgree.visibility = VISIBLE
+            settingFragmentIvAfterAgree.visibility = INVISIBLE
+        }
 
         settingFragmentIvBeforeAgree.setOnClickListener{
             settingFragmentIvBeforeAgree.visibility = INVISIBLE
             settingFragmentIvAfterAgree.visibility = VISIBLE
             userManager.isAgree = true
+            editor.apply(){
+                putBoolean("isAgree",true)
+                apply()
+            }
         }
         settingFragmentIvAfterAgree.setOnClickListener{
             settingFragmentIvBeforeAgree.visibility = VISIBLE
             settingFragmentIvAfterAgree.visibility = INVISIBLE
             userManager.isAgree = false
+            editor.apply(){
+                putBoolean("isAgree",false)
+                apply()
+            }
         }
         settingFragmentBtLogIn.setOnClickListener{
             if(TextUtils.isEmpty(settingFragmentEtId.text)){
@@ -241,7 +258,7 @@ class SettingFragment:Fragment() {
         val verifyWordChoose : Int = 0
         for(i in 0..7){
             verifyText[i].text = ""
-            verifyText[i].setTextColor(R.color.white)
+            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
         }
         verifyText[0].text = verifyWord[verifyWordChoose].one
         verifyText[1].text = verifyWord[verifyWordChoose].two
@@ -261,25 +278,6 @@ class SettingFragment:Fragment() {
             verifyText[pos1].text = verifyText[pos2].text
             verifyText[pos2].text = temp
         }
-//        var tem1:Int
-//        var tem2:Int
-//        var tem3:Int
-//        var tem4:Int
-//
-//        tem1 = (0..7).random()
-//        do{
-//            tem2 = (0..7).random()
-//        }while (tem2 == tem1)
-//        do{
-//            tem3 = (0..7).random()
-//        }while ((tem3 == tem2) || (tem3 == tem1))
-//        do{
-//            tem4 = (0..7).random()
-//        }while ((tem4 == tem2) || (tem4 == tem1) || (tem4 == tem3))
-//        verifyText[tem1].text = verifyWord[i].one
-//        verifyText[tem2].text = verifyWord[i].two
-//        verifyText[tem3].text = verifyWord[i].three
-//        verifyText[tem4].text = verifyWord[i].four
 
     }
 
@@ -288,16 +286,31 @@ class SettingFragment:Fragment() {
         var userAnswer = mutableListOf<String>("*","*","*","*")
         var clickFlag = mutableListOf<Boolean>(false,false,false,false,false,false,false,false)
         var index = 0
+        var pos = 0 //stand for current button
         verifyText[0].setOnClickListener{
-            clickFlag[0] = !clickFlag[0]
-            if(clickFlag[0]){
-                context?.let { verifyText[0].setTextColor(it.getColor(R.color.black)) }
-                userAnswer[index++] = verifyText[0].text.toString()
+            pos = 0
+            clickFlag[pos] = !clickFlag[pos]
+            if(clickFlag[pos]){
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.purple_700)) }
+                if(index == 4){
+                    for(i in 0..7){
+                        if(verifyText[i].text == userAnswer[0]){
+                            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
+                            clickFlag[i] = !clickFlag[i]
+                        }
+                    }
+                    for(i in 0..2){
+                        userAnswer[i] = userAnswer[i+1]
+                    }
+                    userAnswer[3] = verifyText[pos].text.toString()
+                }else{
+                    userAnswer[index++] = verifyText[pos].text.toString()
+                }
             }else{
                 index--
-                verifyText[0].setTextColor(white)
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.white)) }
                 for(i in 0..3){
-                    if(userAnswer[i] == verifyText[0].text.toString()){
+                    if(userAnswer[i] == verifyText[pos].text.toString()){
                         if(i == 3){
                             userAnswer[i] = "*"
                         }else{
@@ -316,15 +329,29 @@ class SettingFragment:Fragment() {
             }
         }
         verifyText[1].setOnClickListener{
-            clickFlag[1] = !clickFlag[1]
-            if(clickFlag[1]){
-                context?.let { verifyText[1].setTextColor(it.getColor(R.color.black)) }
-                userAnswer[index++] = verifyText[1].text.toString()
+            pos = 1
+            clickFlag[pos] = !clickFlag[pos]
+            if(clickFlag[pos]){
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.purple_700)) }
+                if(index == 4){
+                    for(i in 0..7){
+                        if(verifyText[i].text == userAnswer[0]){
+                            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
+                            clickFlag[i] = !clickFlag[i]
+                        }
+                    }
+                    for(i in 0..2){
+                        userAnswer[i] = userAnswer[i+1]
+                    }
+                    userAnswer[3] = verifyText[pos].text.toString()
+                }else{
+                    userAnswer[index++] = verifyText[pos].text.toString()
+                }
             }else{
                 index--
-                verifyText[1].setTextColor(white)
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.white)) }
                 for(i in 0..3){
-                    if(userAnswer[i] == verifyText[1].text.toString()){
+                    if(userAnswer[i] == verifyText[pos].text.toString()){
                         if(i == 3){
                             userAnswer[i] = "*"
                         }else{
@@ -343,23 +370,37 @@ class SettingFragment:Fragment() {
             }
         }
         verifyText[2].setOnClickListener{
-            clickFlag[2] = !clickFlag[2]
-            if(clickFlag[2]){
-                context?.let { verifyText[2].setTextColor(it.getColor(R.color.black)) }
-                userAnswer[index++] = verifyText[2].text.toString()
+            pos = 2
+            clickFlag[pos] = !clickFlag[pos]
+            if(clickFlag[pos]){
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.purple_700)) }
+                if(index == 4){
+                    for(i in 0..7){
+                        if(verifyText[i].text == userAnswer[0]){
+                            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
+                            clickFlag[i] = !clickFlag[i]
+                        }
+                    }
+                    for(i in 0..2){
+                        userAnswer[i] = userAnswer[i+1]
+                    }
+                    userAnswer[3] = verifyText[pos].text.toString()
+                }else{
+                    userAnswer[index++] = verifyText[pos].text.toString()
+                }
             }else{
                 index--
-                verifyText[2].setTextColor(white)
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.white)) }
                 for(i in 0..3){
-                    if(userAnswer[i] == verifyText[2].text.toString()){
+                    if(userAnswer[i] == verifyText[pos].text.toString()){
                         if(i == 3){
                             userAnswer[i] = "*"
                         }else{
                             for(j in i..2){
                                 userAnswer[j] = userAnswer[j+1]
                             }
-                            userAnswer[3] = "*"
                         }
+                        userAnswer[3] = "*"
                     }
                 }
             }
@@ -370,15 +411,29 @@ class SettingFragment:Fragment() {
             }
         }
         verifyText[3].setOnClickListener{
-            clickFlag[3] = !clickFlag[3]
-            if(clickFlag[3]){
-                context?.let { verifyText[3].setTextColor(it.getColor(R.color.black)) }
-                userAnswer[index++] = verifyText[3].text.toString()
+            pos = 3
+            clickFlag[pos] = !clickFlag[pos]
+            if(clickFlag[pos]){
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.purple_700)) }
+                if(index == 4){
+                    for(i in 0..7){
+                        if(verifyText[i].text == userAnswer[0]){
+                            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
+                            clickFlag[i] = !clickFlag[i]
+                        }
+                    }
+                    for(i in 0..2){
+                        userAnswer[i] = userAnswer[i+1]
+                    }
+                    userAnswer[3] = verifyText[pos].text.toString()
+                }else{
+                    userAnswer[index++] = verifyText[pos].text.toString()
+                }
             }else{
                 index--
-                verifyText[3].setTextColor(white)
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.white)) }
                 for(i in 0..3){
-                    if(userAnswer[i] == verifyText[3].text.toString()){
+                    if(userAnswer[i] == verifyText[pos].text.toString()){
                         if(i == 3){
                             userAnswer[i] = "*"
                         }else{
@@ -397,15 +452,29 @@ class SettingFragment:Fragment() {
             }
         }
         verifyText[4].setOnClickListener{
-            clickFlag[4] = !clickFlag[4]
-            if(clickFlag[4]){
-                context?.let { verifyText[4].setTextColor(it.getColor(R.color.black)) }
-                userAnswer[index++] = verifyText[4].text.toString()
+            pos = 4
+            clickFlag[pos] = !clickFlag[pos]
+            if(clickFlag[pos]){
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.purple_700)) }
+                if(index == 4){
+                    for(i in 0..7){
+                        if(verifyText[i].text == userAnswer[0]){
+                            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
+                            clickFlag[i] = !clickFlag[i]
+                        }
+                    }
+                    for(i in 0..2){
+                        userAnswer[i] = userAnswer[i+1]
+                    }
+                    userAnswer[3] = verifyText[pos].text.toString()
+                }else{
+                    userAnswer[index++] = verifyText[pos].text.toString()
+                }
             }else{
                 index--
-                verifyText[4].setTextColor(white)
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.white)) }
                 for(i in 0..3){
-                    if(userAnswer[i] == verifyText[4].text.toString()){
+                    if(userAnswer[i] == verifyText[pos].text.toString()){
                         if(i == 3){
                             userAnswer[i] = "*"
                         }else{
@@ -424,15 +493,29 @@ class SettingFragment:Fragment() {
             }
         }
         verifyText[5].setOnClickListener{
-            clickFlag[5] = !clickFlag[5]
-            if(clickFlag[5]){
-                context?.let { verifyText[5].setTextColor(it.getColor(R.color.black)) }
-                userAnswer[index++] = verifyText[5].text.toString()
+            pos = 5
+            clickFlag[pos] = !clickFlag[pos]
+            if(clickFlag[pos]){
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.purple_700)) }
+                if(index == 4){
+                    for(i in 0..7){
+                        if(verifyText[i].text == userAnswer[0]){
+                            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
+                            clickFlag[i] = !clickFlag[i]
+                        }
+                    }
+                    for(i in 0..2){
+                        userAnswer[i] = userAnswer[i+1]
+                    }
+                    userAnswer[3] = verifyText[pos].text.toString()
+                }else{
+                    userAnswer[index++] = verifyText[pos].text.toString()
+                }
             }else{
                 index--
-                verifyText[5].setTextColor(white)
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.white)) }
                 for(i in 0..3){
-                    if(userAnswer[i] == verifyText[5].text.toString()){
+                    if(userAnswer[i] == verifyText[pos].text.toString()){
                         if(i == 3){
                             userAnswer[i] = "*"
                         }else{
@@ -451,15 +534,29 @@ class SettingFragment:Fragment() {
             }
         }
         verifyText[6].setOnClickListener{
-            clickFlag[6] = !clickFlag[6]
-            if(clickFlag[6]){
-                context?.let { verifyText[6].setTextColor(it.getColor(R.color.black)) }
-                userAnswer[index++] = verifyText[6].text.toString()
+            pos = 6
+            clickFlag[pos] = !clickFlag[pos]
+            if(clickFlag[pos]){
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.purple_700)) }
+                if(index == 4){
+                    for(i in 0..7){
+                        if(verifyText[i].text == userAnswer[0]){
+                            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
+                            clickFlag[i] = !clickFlag[i]
+                        }
+                    }
+                    for(i in 0..2){
+                        userAnswer[i] = userAnswer[i+1]
+                    }
+                    userAnswer[3] = verifyText[pos].text.toString()
+                }else{
+                    userAnswer[index++] = verifyText[pos].text.toString()
+                }
             }else{
                 index--
-                verifyText[6].setTextColor(white)
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.white)) }
                 for(i in 0..3){
-                    if(userAnswer[i] == verifyText[6].text.toString()){
+                    if(userAnswer[i] == verifyText[pos].text.toString()){
                         if(i == 3){
                             userAnswer[i] = "*"
                         }else{
@@ -478,15 +575,29 @@ class SettingFragment:Fragment() {
             }
         }
         verifyText[7].setOnClickListener{
-            clickFlag[7] = !clickFlag[7]
-            if(clickFlag[7]){
-                context?.let { verifyText[7].setTextColor(it.getColor(R.color.black)) }
-                userAnswer[index++] = verifyText[7].text.toString()
+            pos = 7
+            clickFlag[pos] = !clickFlag[pos]
+            if(clickFlag[pos]){
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.purple_700)) }
+                if(index == 4){
+                    for(i in 0..7){
+                        if(verifyText[i].text == userAnswer[0]){
+                            context?.let { verifyText[i].setTextColor(it.getColor(R.color.white)) }
+                            clickFlag[i] = !clickFlag[i]
+                        }
+                    }
+                    for(i in 0..2){
+                        userAnswer[i] = userAnswer[i+1]
+                    }
+                    userAnswer[3] = verifyText[pos].text.toString()
+                }else{
+                    userAnswer[index++] = verifyText[pos].text.toString()
+                }
             }else{
                 index--
-                verifyText[7].setTextColor(white)
+                context?.let { verifyText[pos].setTextColor(it.getColor(R.color.white)) }
                 for(i in 0..3){
-                    if(userAnswer[i] == verifyText[7].text.toString()){
+                    if(userAnswer[i] == verifyText[pos].text.toString()){
                         if(i == 3){
                             userAnswer[i] = "*"
                         }else{
